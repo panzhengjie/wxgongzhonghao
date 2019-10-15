@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+  <title>电影预告片</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://cdn.bootcss.com/dplayer/1.25.0/DPlayer.min.css" rel="stylesheet">
+  <style>
+    .container{
+      padding: 0;
+    }
+    .navbar-brand{
+      color: #f3f3f3!important;
+    }
+    .btn.btn-outline-success{
+      color: #f3f3f3;
+      border-color: #f3f3f3;
+    }
+    .btn.btn-link{
+      text-decoration: none;
+      margin-left: -.2rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand">电影预告片</a>
+    <form class="form-inline" action="/movie">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </nav>
+  <div class="row" id="accordionExample">
+    <div class="col">
+      <div class="card-group">
+        <% data.forEach((item,index)=> { %>
+          <div class="card">
+            <img src="http://pyxrqg6l7.bkt.clouddn.com/<%= item.posterKey %>" class="card-img-top" alt="..."
+                 data-coverkey="http://pyxrqg6l7.bkt.clouddn.com/<%= item.coverKey %>"
+                 data-videokey="http://pyxrqg6l7.bkt.clouddn.com/<%= item.videoKey %>"
+                 data-douban="<%= item.doubanId %>">
+            <div class="card-body">
+              <h5 class="card-title"><%= item.title %></h5>
+              <p class="card-text">&nbsp;&nbsp;&nbsp;&nbsp;<%= item.summery %></p>
+            </div>
+            <div class="card-header" id="heading<%= index %>>">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="false" aria-controls="collapse<%= index %>">
+                  点击显示电影详情
+                </button>
+              </h2>
+            </div>
+            <div id="collapse<%= index %>" class="collapse" aria-labelledby="heading<%= index %>" data-parent="#accordionExample">
+              <div class="card-body">
+                <ul class="list-group">
+                  <li class="list-group-item">导演：<%= item.directors %></li>
+                  <li class="list-group-item">主演：
+                    <% item.casts.forEach(cast =>{ %>
+                        <%= cast %>&nbsp;&nbsp;
+                    <% }) %>
+                  </li>
+                  <li class="list-group-item">评分：<%= item.rating?item.rating:'暂无评分' %></li>
+                  <li class="list-group-item">类型：
+                    <% item.genre.forEach(genr =>{ %>
+                    <%= genr %>&nbsp;&nbsp;
+                    <% }) %>
+                  </li>
+                  <li class="list-group-item">上映时间：<%= item.releaseDate %></li>
+                  <li class="list-group-item">片长：<%= item.runtime %></li>
+                </ul>
+              </div>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"><%= Math.ceil((Date.now()-item.createTime)/86400000) %>天前更新</small>
+            </div>
+          </div>
+        <% }) %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div id="dplayer"></div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcss.com/dplayer/1.25.0/DPlayer.min.js"></script>
+<script type="text/javascript">
+  $(function () {
+    let dp = null ; //定义Ddpaly
+    //记录上一次视频
+    let lastVideo = null;
+    $('#myModal').on('hidden.bs.modal', function (e) { //模态框消失
+      dp.pause();//视频暂停
+    })
+    $('.card-img-top').click(function (){
+      $('#myModal').modal('show');
+      const cover = $(this).data('coverkey');
+      const video = $(this).data('videokey');
+      const doubanId = $(this).data('douban');
+      if(!dp){
+         dp = new DPlayer({
+          container: document.getElementById('dplayer'),
+          video: {
+            url: video,
+            pic: cover,
+            thumbnails: cover,
+          },
+          danmaku: {
+            id: doubanId,
+            api: 'http://c73b0f77.ngrok.io/',
+          },
+        });
+      }else {
+        if(lastVideo === video){//判断上一个视频与当前点击视频是否相同
+          dp.play();//播放当前视频
+        } else {
+          dp.switchVideo(
+            {
+              url: video,
+              pic: cover,
+              thumbnails:cover,
+            },
+            {
+              id: doubanId,
+              api: 'http://c73b0f77.ngrok.io/',
+              maximum: 3000,
+              user: 'DIYgod',
+            }
+          );
+        }
+
+      }
+      lastVideo = video; //同步
+    })
+
+  })
+</script>
+</body>
+</html>

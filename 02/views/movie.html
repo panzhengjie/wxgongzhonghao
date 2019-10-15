@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+  <meta name="referrer" content="never">
+  <title>电影预告片</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    .container{
+      padding: 0;
+    }
+    .navbar-brand{
+      color: #f3f3f3!important;
+    }
+    .btn.btn-outline-success{
+      color: #f3f3f3;
+      border-color: #f3f3f3;
+    }
+    .btn.btn-link{
+      text-decoration: none;
+      margin-left: -.2rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand">电影预告片</a>
+    <form class="form-inline">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </nav>
+  <div class="row" id="accordionExample">
+    <div class="col">
+      <div class="card-group">
+        <div class="card">
+          <img src="http://pyxrqg6l7.bkt.clouddn.com/2VdbNCBUoFmNFSjORMsyJ.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">叶问</h5>
+            <p class="card-text">&nbsp;&nbsp;&nbsp;&nbsp;基地警报响起，⼀座海上钻井平台发⽣严重事故，随时可能倾覆沉没，交通海上应急反应特勤队全体队员迅速前往救援。时间紧迫，队长⾼谦（彭于晏饰）率领搜救直升机迎着此起彼伏的爆炸和冲天咆哮的⽕龙，飞进平台范围，与⽣死兄弟、绞车⼿赵呈（王彦霖饰）合作，⽤最危险的⽅式深⼊绝境，拯救幸存者……'
+            </p>
+          </div>
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                点击显示电影详情
+              </button>
+            </h2>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+                <ul class="list-group">
+                  <li class="list-group-item">导演：</li>
+                  <li class="list-group-item">主演：</li>
+                  <li class="list-group-item">评分：</li>
+                  <li class="list-group-item">上映时间：</li>
+                  <li class="list-group-item">片长：</li>
+                </ul>
+              </div>
+            </div>
+          <div class="card-footer">
+            <small class="text-muted">一周前更新</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
